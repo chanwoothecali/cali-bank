@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:numterpark
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.format_sql: true
+    show-sql: true
+  devtools:
+    livereload:
+      enabled: true
+logging:
+  level:
+    ROOT: DEBUG
+#    com.cali: DEBUG
+#    org.hibernate: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#    org.springframework.orm: TRACE
+#    org.springframework.transaction: TRACE
+#    com.zaxxer.hikari: TRACE
+#    com.mysql.cj.jdbc: TRACE
+
+jwt:
+  header: Authorization
+  #HS512 ????? ??? ??? ??? 512bit, ? 64byte ??? secret key? ???? ??.
+  secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ==
+  token-validity-in-seconds: 86400 # ttl (?)
