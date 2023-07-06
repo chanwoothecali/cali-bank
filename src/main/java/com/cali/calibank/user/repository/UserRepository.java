@@ -1,6 +1,6 @@
-package com.cali.user.repository;
+package com.cali.calibank.user.repository;
 
-import com.cali.user.domain.entity.User;
+import com.cali.calibank.user.domain.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
