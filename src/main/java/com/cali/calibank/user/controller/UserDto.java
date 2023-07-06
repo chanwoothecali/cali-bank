@@ -1,7 +1,7 @@
-package com.cali.user.controller;
+package com.cali.calibank.user.controller;
 
-import com.cali.user.domain.common.UserRole;
-import com.cali.user.domain.entity.User;
+import com.cali.calibank.user.domain.common.UserRole;
+import com.cali.calibank.user.domain.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserDto {
 
@@ -41,10 +42,10 @@ public class UserDto {
             this.phoneNumber = phoneNumber;
         }
 
-        public User toEntity() {
+        public User toEntity(PasswordEncoder passwordEncoder) {
             return User.builder()
                 .email(email)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .name(name)
                 .role(UserRole.NORMAL)
                 .phoneNumber(phoneNumber)
@@ -54,19 +55,22 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class SignupResponse {
+    public static class TokenResponse {
 
-        private Long id;
+        private String accessToken;
+
+        private String refreshToken;
 
         @Builder
-        public SignupResponse(Long id) {
-            this.id = id;
+        public TokenResponse(String accessToken, String refreshToken) {
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
         }
     }
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class LoginRequest {
+    public static class AuthRequest {
 
         @NotBlank(message = "이메일 주소를 입력해주세요.")
         @Email(message = "올바른 이메일 주소를 입력해주세요.")
@@ -77,21 +81,9 @@ public class UserDto {
         private String password;
 
         @Builder
-        public LoginRequest(String email, String password) {
+        public AuthRequest(String email, String password) {
             this.email = email;
             this.password = password;
-        }
-    }
-
-    @Getter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class TokenDto {
-
-        private String token;
-
-        @Builder
-        public TokenDto(String token) {
-            this.token = token;
         }
     }
 }
