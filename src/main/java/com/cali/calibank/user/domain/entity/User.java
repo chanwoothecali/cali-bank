@@ -1,5 +1,6 @@
 package com.cali.calibank.user.domain.entity;
 
+import com.cali.calibank.account.entity.Account;
 import com.cali.calibank.user.domain.common.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,7 +48,10 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
+    private List<Token> tokens = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Account> accounts = new HashSet<>();
 
     @Builder
     public User(Long id, String email, String name, String password, UserRole role,
@@ -58,6 +64,10 @@ public class User implements UserDetails {
         this.role = role;
         this.phoneNumber = phoneNumber;
         this.tokens = tokens;
+    }
+
+    public void addAccount(Account account) {
+        accounts.add(account);
     }
 
     @Override
